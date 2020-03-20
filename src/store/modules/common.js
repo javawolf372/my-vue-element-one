@@ -10,7 +10,8 @@ const state = {
     title: '首页',
     routerPath: '/main'
   }],
-  tabsActiveName: '/main'
+  tabsActiveName: '/main',
+  menuData: []
 }
 
 const mutations = {
@@ -20,8 +21,18 @@ const mutations = {
   ADD_TABS: (state, obj) => {
     state.tabsData.push(obj)
   },
+  INIT_TABS: (state) => {
+    state.tabsData = [{
+      id: 10000,
+      title: '首页',
+      routerPath: '/main'
+    }]
+  },
   SET_TABS_ACTIVE_NAME: (state, val) => {
     state.tabsActiveName = val
+  },
+  SET_MENU_DATA: (state, data) => {
+    state.menuData = data
   }
 }
 
@@ -32,12 +43,32 @@ const actions = {
       method: 'post',
       data: userInfo
     }).then(response => {
-      console.log('response：' + response)
       const { data } = response
       commit('SET_TOKEN', data.token)
       setToken(data.token)
+      // 封装一下菜单数据
+      const menuItems = []
+      for (const d of data.menuData.childAuth) {
+        const childs = []
+        for (const c of d.lowerMenu) {
+          const child = {
+            id: c.id,
+            title: c.title,
+            url: c.url
+          }
+          childs.push(child)
+        }
+        const menuItem = {
+          id: d.id,
+          title: d.parentTitle,
+          iconClass: d.icon,
+          childs: childs
+        }
+        menuItems.push(menuItem)
+      }
+      commit('SET_MENU_DATA', menuItems)
     }).catch(error => {
-      console.log('---' + error)
+      console.log('登录失败---' + error)
       throw error
     })
   },
@@ -51,8 +82,8 @@ const actions = {
       url: 'common/test'
     })
   },
-  addTabs({ commit }, data) {
-    const quest = state.tabsData.find((item) => item.routerPath === data.url)
+  addTabs({ commit, state }, data) {
+    const quest = state.tabsData.find((item) => item.id === data.id)
     if (!quest) {
       commit('ADD_TABS', {
         id: data.id,
@@ -62,6 +93,10 @@ const actions = {
       })
     }
     commit('SET_TABS_ACTIVE_NAME', data.url)
+  },
+  initStore({ commit }) {
+    commit('INIT_TABS')
+    commit('SET_TABS_ACTIVE_NAME', '/main')
   }
 }
 

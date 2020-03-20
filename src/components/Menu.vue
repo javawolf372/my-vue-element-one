@@ -6,6 +6,7 @@
       style="height: 100%"
       text-color="#fff"
       :collapse="isShowMenu"
+      :unique-opened="true"
     >
       <el-submenu v-for="sm in menuItems" :key="sm.id" :index="'sub'+sm.id">
         <template slot="title">
@@ -34,24 +35,18 @@ export default {
     }
   },
   created() {
-    this.menuItems = [{
-      id: 1001,
-      title: '样例',
-      iconClass: 'el-icon-location',
-      childs: [{
-        id: 100101,
-        title: '综合数据表格',
-        url: 'demo'
-      }, {
-        id: 100102,
-        title: '测试2',
-        url: 'demo2'
-      }]
-    }]
+    this.showMenu()
   },
   methods: {
     selectMenuItem(data) {
-      this.$store.dispatch('common/addTabs', data)
+      if (this.$router.options.routes[2].children.find((item) => item.path.includes(data.url))) {
+        this.$store.dispatch('common/addTabs', data)
+      } else {
+        console.log('五权限')
+      }
+    },
+    showMenu() {
+      this.menuItems = this.$store.state.common.menuData
     }
   }
 }

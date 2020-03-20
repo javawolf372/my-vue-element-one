@@ -20,7 +20,11 @@ import MyMainPage from '@/components/MainPage'
 
 export default {
   name: 'Main',
-  components: { MyHeader, MyMenu, MyMainPage }
+  components: { MyHeader, MyMenu, MyMainPage },
+  created() {
+    this.$store.dispatch('common/initStore')
+    this.$router.push({ path: '/main' })
+  }
 }
 </script>
 

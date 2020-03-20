@@ -41,7 +41,7 @@ service.interceptors.response.use(
         })
       } else {
         Message({
-          message: '系统错误，请联系管理员！',
+          message: res.message?res.message:'系统错误，请联系管理员！',
           type: 'error',
           duration: 5 * 1000
         })
