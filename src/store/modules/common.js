@@ -31,6 +31,9 @@ const mutations = {
   SET_TABS_ACTIVE_NAME: (state, val) => {
     state.tabsActiveName = val
   },
+  SET_TABS_DATA: (state, val) => {
+    state.tabsData = val
+  },
   SET_MENU_DATA: (state, data) => {
     state.menuData = data
   }
@@ -97,6 +100,10 @@ const actions = {
   initStore({ commit }) {
     commit('INIT_TABS')
     commit('SET_TABS_ACTIVE_NAME', '/main')
+  },
+  setTabs({ commit }, data) {
+    commit('SET_TABS_ACTIVE_NAME', data.tabsActiveName)
+    commit('SET_TABS_DATA', data.tabsData)
   }
 }
 

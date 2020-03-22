@@ -21,11 +21,16 @@ const constantRoutes = [
     }, {
       path: '/demo',
       component: () => import('@/views/demo/index')
+    }, {
+      path: '/404-*',
+      component: () => import('@/components/Page404')
     }]
   }
 ]
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   routes: constantRoutes
 })
+
+export default router

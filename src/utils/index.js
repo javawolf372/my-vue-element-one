@@ -1,7 +1,3 @@
-/**
- * Created by jiachenpan on 16/11/18.
- */
-
 export function parseTime(time, cFormat) {
   if (arguments.length === 0) {
     return null
@@ -78,7 +74,7 @@ export function formatTime(time, option) {
   }
 }
 
-// 格式化时间
+// 获取url参数
 export function getQueryObject(url) {
   url = url == null ? window.location.href : url
   const search = url.substring(url.lastIndexOf('?') + 1)

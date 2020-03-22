@@ -16,7 +16,7 @@
         <el-menu-item
           v-for="item in sm.childs"
           :key="item.id"
-          :index="item.url"
+          :index="formateUrl(item.url, item.id)"
           @click="selectMenuItem(item)"
         >
           {{ item.title }}
@@ -39,14 +39,24 @@ export default {
   },
   methods: {
     selectMenuItem(data) {
-      if (this.$router.options.routes[2].children.find((item) => item.path.includes(data.url))) {
-        this.$store.dispatch('common/addTabs', data)
-      } else {
-        console.log('五权限')
+      if (!this.$router.options.routes[2].children.find((item) => item.path.includes(data.url))) {
+        data.url = '404-' + data.id
       }
+      this.$store.dispatch('common/addTabs', data)
     },
     showMenu() {
       this.menuItems = this.$store.state.common.menuData
+    }
+  },
+  computed: {
+    formateUrl() {
+      return function(url, id) {
+        if (this.$router.options.routes[2].children.find((item) => item.path.includes(url))) {
+          return url
+        } else {
+          return '404-' + id
+        }
+      }
     }
   }
 }
