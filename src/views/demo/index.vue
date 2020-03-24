@@ -12,7 +12,7 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">查询</el-button>
-        <el-button type="primary" icon="el-icon-plus" @click="toAdd">添加</el-button>
+        <el-button type="primary" icon="el-icon-plus" @click="toAdd" v-has="20280102">添加</el-button>
       </el-form-item>
     </el-form>
     <el-table
@@ -70,13 +70,14 @@
             type="primary"
             size="mini"
             @click="toEdit(scope.$index, scope.row)"
+            v-has="20280103"
           >编辑</el-button>
           <el-popconfirm
             title="确定删除该条记录吗？"
             style="margin-left: 10px"
             @onConfirm="deleteConfirm(scope.row.id)"
           >
-            <el-button slot="reference" round size="mini" type="danger">删除</el-button>
+            <el-button slot="reference" round size="mini" type="danger" v-has="20280104">删除</el-button>
           </el-popconfirm>
         </template>
       </el-table-column>

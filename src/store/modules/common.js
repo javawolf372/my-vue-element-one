@@ -11,7 +11,8 @@ const state = {
     routerPath: '/main'
   }],
   tabsActiveName: '/main',
-  menuData: []
+  menuData: [],
+  buttonIds: []
 }
 
 const mutations = {
@@ -36,6 +37,9 @@ const mutations = {
   },
   SET_MENU_DATA: (state, data) => {
     state.menuData = data
+  },
+  SET_BUTTONS_DATA: (state, data) => {
+    state.buttonIds = data
   }
 }
 
@@ -70,6 +74,8 @@ const actions = {
         menuItems.push(menuItem)
       }
       commit('SET_MENU_DATA', menuItems)
+      // 设置页面按钮权限
+      commit('SET_BUTTONS_DATA', data.menuData.buttons)
     }).catch(error => {
       console.log('登录失败---' + error)
       throw error

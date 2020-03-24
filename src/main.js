@@ -14,6 +14,24 @@ Vue.config.productionTip = false
 Vue.use(VueI18n)
 Vue.use(Element)
 
+Vue.directive('has', {
+  inserted: function(el, binding, vnode) {
+    if (!permissionJudge(binding.value)) {
+      el.parentNode.removeChild(el)
+    }
+
+    function permissionJudge(value) {
+      const list = vnode.context.$store.state.common.buttonIds
+      for (const item of list) {
+        if (item === value) {
+          return true
+        }
+      }
+      return false
+    }
+  }
+})
+
 const i18n = new VueI18n({
   locale: 'zh-CN', // 语言标识 可通过this.$i18n.locale 切换locale的值来实现语言切换
   messages: {
