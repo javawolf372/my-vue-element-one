@@ -85,7 +85,7 @@
     <el-pagination
       style="text-align: center;margin-top: 5px"
       background
-      layout="sizes, prev, pager, next, ->, total"
+      layout="sizes, prev, pager, next, slot, ->, total"
       prev-text="上一页"
       next-text="下一页"
       :page-size="pageSize"
@@ -93,7 +93,9 @@
       :total="totalSize"
       @size-change="changeSize"
       @current-change="changeCurrPage"
-    />
+    >
+      <el-button @click="initData" type="primary" plain>刷新</el-button>
+    </el-pagination>
     <el-dialog title="个人信息" :visible.sync="dialogFormVisible">
       <el-form ref="demoForm" :model="form" label-width="80px">
         <el-form-item label="姓名" prop="name">
